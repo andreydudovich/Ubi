@@ -3,11 +3,6 @@ package helpers;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
 
 import static com.google.common.util.concurrent.Uninterruptibles.sleepUninterruptibly;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -17,7 +12,6 @@ public class RequestHelper {
 
     protected static final int STATUS_CODE_200 = 200;
     protected static final int STATUS_CODE_201 = 201;
-    protected static final int STATUS_CODE_202 = 202;
 
     public static Response postCallMethod(String endPoint, Object modelBuilder) {
         waitBeforeRequest();

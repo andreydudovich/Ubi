@@ -1,9 +1,9 @@
 package runners;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.java.Log;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
-@Slf4j
+@Log
 public class AbstractTestRunner {
 
     @BeforeClass
