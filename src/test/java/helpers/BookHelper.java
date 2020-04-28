@@ -1,19 +1,21 @@
 package helpers;
 
 import elements.models.BookModel;
+import io.cucumber.guice.ScenarioScoped;
 import io.restassured.response.Response;
 import lombok.extern.java.Log;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Log
+@ScenarioScoped
 public class BookHelper extends RequestHelper {
+
+    protected Response response;
 
     protected static String SERVER_UP = "Server is UP";
     protected static String LOCALHOST = "http://localhost:4000/";
     protected static String API = "books";
-
-    protected Response response;
 
     protected void addBookToLibrary(String url, String name, String author, String year, int available) {
         log.info("Adding book to library");
@@ -30,6 +32,16 @@ public class BookHelper extends RequestHelper {
         checkStatusCode200(response.statusCode());
     }
 
+    public void getBookByIdFromLibrary(String id) {
+        response = getCallMethod(LOCALHOST + API + "/" + id);
+        response.getBody().prettyPrint();
+    }
+
+    protected void updateBookInformation(String url, String name, String author, String year, int available) {
+        log.info("Updating book information.");
+        response = putCallMethod(url, bookModel(name, author, year, available));
+    }
+
     private BookModel bookModel(String name, String author, String year, int available) {
         return BookModel.builder()
                 .name(name)
@@ -39,8 +51,23 @@ public class BookHelper extends RequestHelper {
                 .build();
     }
 
-    public String extractBody() {
+    public String getActualName() {
         return response.getBody().jsonPath().getString("name");
     }
 
+    public String getActualAuthor() {
+        return response.getBody().jsonPath().getString("author");
+    }
+
+    public String getActualYear() {
+        return response.getBody().jsonPath().getString("year");
+    }
+
+    public int getActualAvailable() {
+        return response.getBody().jsonPath().getInt("available");
+    }
+
+    public String getActualId() {
+        return response.getBody().jsonPath().getString("id");
+    }
 }

@@ -1,6 +1,5 @@
 package steps;
 
-import elements.models.BookModel;
 import helpers.BookHelper;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.And;
@@ -45,15 +44,13 @@ public class BooksSteps extends BookHelper {
         addBookToLibrary(LOCALHOST + API, name, author, year, available);
     }
 
-    @When("user want to get book by {string}")
-    public void userWantToGetBookBy(String id) {
-        getCallMethod(LOCALHOST + API + "/" + id)
-                .getBody()
-                .jsonPath()
-                .prettyPrint();
+    @When("user want to get book by id: {string}")
+    public void userWantToGetBookById(String id) {
+        getBookByIdFromLibrary(id);
+        response.getBody().prettyPrint();
     }
 
-    @Then("book with {string} is returned")
+    @Then("book with id: {string} is returned")
     public void bookWithIsReturned(String id) {
         bookIdIs(id);
     }
@@ -107,5 +104,41 @@ public class BooksSteps extends BookHelper {
             log.info("JSON is null");
         }
         assertNotNull(response, "Response is null.");
+    }
+
+    @When("user updates book name to {string}")
+    public void userUpdatesBookNameTo(String anotherName) {
+        updateBookInformation(LOCALHOST + API + "/" + getActualId(),
+                anotherName, getActualAuthor(), getActualYear(), getActualAvailable());
+
+        assertEquals(anotherName, getActualName(), "Wrong book name: " +
+                getActualName() + ", expected: " + anotherName);
+    }
+
+    @And("user updates book author to {string}")
+    public void userUpdatesBookAuthorTo(String anotherAuthor) {
+        updateBookInformation(LOCALHOST + API + "/" + getActualId(),
+                getActualName(), anotherAuthor, getActualYear(), getActualAvailable());
+
+        assertEquals(anotherAuthor, getActualAuthor(), "Wrong book author: " +
+                getActualAuthor() + ", expected: " + anotherAuthor);
+    }
+
+    @And("user updates book year to {string}")
+    public void userUpdatesBookYearTo(String anotherYear) {
+        updateBookInformation(LOCALHOST + API + "/" + getActualId(), getActualName(),
+                getActualAuthor(), anotherYear, getActualAvailable());
+
+        assertEquals(anotherYear, getActualYear(), "Wrong book year: " +
+                getActualYear() + ", expected: " + anotherYear);
+    }
+
+    @And("user updates book availability to {int}")
+    public void userUpdatesBookAvailabilityTo(int anotherAvailability) {
+        updateBookInformation(LOCALHOST + API + "/" + getActualId(), getActualName(),
+                getActualAuthor(), getActualYear(), anotherAvailability);
+
+        assertEquals(anotherAvailability, getActualAvailable(), "Wrong book count: " +
+                getActualAvailable() + ", expected: " + anotherAvailability);
     }
 }

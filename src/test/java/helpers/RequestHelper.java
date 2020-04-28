@@ -1,5 +1,6 @@
 package helpers;
 
+import io.cucumber.guice.ScenarioScoped;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -8,6 +9,7 @@ import static com.google.common.util.concurrent.Uninterruptibles.sleepUninterrup
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@ScenarioScoped
 public class RequestHelper {
 
     protected static final int STATUS_CODE_200 = 200;
