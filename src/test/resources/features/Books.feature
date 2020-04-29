@@ -70,7 +70,7 @@ Feature: Simple library test for REST API
     And book with id: "300" is returned
 
   @updateBook @put @failed
-  Scenario: Book information update
+  Scenario: Failed scenario. Book information update
     Given user want to get book by id: "2"
     When user updates book name to "Carl Sagan"
     And user updates book author to "Cosmos"
