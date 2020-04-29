@@ -12,23 +12,23 @@ Feature: Simple library test for REST API
 
     Examples:
       | name                     | author                          | year    | available |
-      | "Cosoms"                 | "Carl Sagan"                    | "1980"  | 11        |
+      | "Cosmos"                 | "Carl Sagan"                    | "1980"  | 11        |
       | "It"                     | "Stephen King"                  | "1986"  | 5         |
       | "A Song of Ice and Fire" | "George Raymond Richard Martin" | "1996"  | 55        |
 
   @addBook @post
   Scenario: Add one book to the library
-    When user add Book: "test" "test" "test" 48 to the library
+    When user add Book: "Book1" "Author1" "2001" 48 to the library
     Then response status code should be 201
     Then book is added to library
 
-  @addBooksAndValidateFileds @post
+  @addBooksAndValidateFields @post
   Scenario: Add book to the library and check that fields are correct
-    When user add Book: "abrakadabra" "test3" "test4" 69 to the library
+    When user add Book: "BookAbrakadabra" "AuthorAbrakadabra" "2020" 69 to the library
     Then book is added to library
-    And book name is "abrakadabra"
-    And book author is "test3"
-    And book year is "test4"
+    And book name is "BookAbrakadabra"
+    And book author is "AuthorAbrakadabra"
+    And book year is "2020"
     And book availability is 69
 
   @getBooks @get
