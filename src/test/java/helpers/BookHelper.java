@@ -37,6 +37,11 @@ public class BookHelper extends RequestHelper {
         response.getBody().prettyPrint();
     }
 
+    public void deleteBookByIdFromLibrary(String id) {
+        response = deleteCallMethod(LOCALHOST + API + "/" + id);
+        response.getBody().prettyPrint();
+    }
+
     protected void updateBookInformation(String url, String name, String author, String year, int available) {
         log.info("Updating book information.");
         response = putCallMethod(url, bookModel(name, author, year, available));

@@ -47,7 +47,6 @@ public class BooksSteps extends BookHelper {
     @When("user want to get book by id: {string}")
     public void userWantToGetBookById(String id) {
         getBookByIdFromLibrary(id);
-        response.getBody().prettyPrint();
     }
 
     @Then("book with id: {string} is returned")
@@ -91,8 +90,7 @@ public class BooksSteps extends BookHelper {
 
     @And("book id is {string}")
     public void bookIdIs(String providedId) {
-        String actualId = response.getBody().jsonPath().getString("id");
-        assertEquals(providedId, actualId, "Book with id: " + providedId + " does not exist.");
+        assertEquals(providedId, getActualId(), "Book with id: " + providedId + " does not exist.");
     }
 
     @And("list of books is returned")
@@ -140,5 +138,19 @@ public class BooksSteps extends BookHelper {
 
         assertEquals(anotherAvailability, getActualAvailable(), "Wrong book count: " +
                 getActualAvailable() + ", expected: " + anotherAvailability);
+    }
+
+    @When("user want to delete book by id: {string}")
+    public void userWantToDeleteBookById(String id) {
+        deleteBookByIdFromLibrary(id);
+    }
+
+    @And("book should be deleted")
+    public void bookShouldBeDeleted() {
+        String actualMessage = response.getBody().jsonPath().getString("message");
+        String expectedMessage = "Book has been deleted";
+
+        assertEquals(expectedMessage, actualMessage, "Wrong book count: " +
+                actualMessage + ", expected: " + expectedMessage);
     }
 }

@@ -56,6 +56,15 @@ public class RequestHelper {
                 .get();
     }
 
+    public static Response deleteCallMethod(String endPoint) {
+        waitBeforeRequest();
+        return RestAssured.with()
+                .baseUri(endPoint)
+                .log().method()
+                .log().uri()
+                .delete();
+    }
+
     public static void checkStatusCode200(int actualStatusCode) {
         assertEquals(STATUS_CODE_200, actualStatusCode, "Wrong status code:" + actualStatusCode + ", expected: " + STATUS_CODE_200);
     }
